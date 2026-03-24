@@ -1,14 +1,14 @@
 import React from 'react'
-
+import './Button.scss'
 const Button = ({
     text,
     className,
-    icons
-}) => {
+    onClick,
+    icons }) => {
     return (
-        <button className={`btn ${className}`}>
+        <button onClick={onClick} className={`btn ${className}`}>
             {text}
-            {icons && <img src="/images/arrow.svg"/> }
+            {icons && <img src='/images/arrow.svg' />}
         </button>
     )
 }
