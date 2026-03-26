@@ -12,6 +12,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/members")
 public class MemberController {
+
     private final MemberService memberService;
 
     @PostMapping
@@ -22,7 +23,7 @@ public class MemberController {
                 request.password(),
                 request.passwordConfirm(),
                 request.phone()
-        );
+                );
     }
 
     @GetMapping

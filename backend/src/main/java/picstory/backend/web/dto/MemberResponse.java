@@ -5,7 +5,7 @@ import picstory.backend.domain.MemberStatus;
 
 import java.time.LocalDateTime;
 
-public record MemberResponse(
+public record MemberResponse (
         Long id,
         String name,
         String email,
@@ -22,7 +22,7 @@ public record MemberResponse(
                 m.getPhone(),
                 m.getStatus(),
                 m.isEmailVerified(),
-                m.getCreateAt()
+                m.getCreatedAt()
         );
     }
 }

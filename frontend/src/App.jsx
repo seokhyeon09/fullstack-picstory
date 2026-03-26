@@ -1,11 +1,13 @@
 
-import './index.scss'
-import './App.css'
+// import './App.css'
 
 function App() {
+
   return (
     <>
-      <h1>Hello react</h1>
+
+      <h1>hello react</h1>
+
     </>
   )
 }
