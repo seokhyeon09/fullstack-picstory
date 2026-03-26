@@ -1,13 +1,13 @@
 import React from 'react'
 import { Navigate } from 'react-router-dom'
 import { useAuth } from './auth.store'
+const ProtectRoute = ({children}) => {
 
-const ProtectRoute = ({ children }) => {
+  const {isAuthed}= useAuth()
 
-    const { isAuthed } = useAuth()
+  if(!isAuthed) return <Navigate to="/login" replace/>
 
-    if (!isAuthed) return <Navigate to="/login" replace />
-    return children
+  return children
 }
 
 export default ProtectRoute
