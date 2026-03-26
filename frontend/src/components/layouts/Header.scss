@@ -1,22 +1,21 @@
 @use "@/styles/variables" as *;
 header {
-    .inner {
-        max-width: $container-lg;
-        display: flex;
-        justify-content: space-between;
-        padding: $space-lg 0;
+  .inner {
+    max-width: $container-lg;
+    display: flex;
+    justify-content: space-between;
+    padding: $space-lg 0;
 
-        h1 {
-            width: 136px;
-        }
-        .right {
-            display: flex;
-            align-items: center;
-            
-            ul{
-                
-                display: flex;
-            }
-        }
+    h1 {
+      width: 136px;
     }
+    .right {
+      display: flex;
+      align-items: center;
+
+      ul {
+        display: flex;
+      }
+    }
+  }
 }

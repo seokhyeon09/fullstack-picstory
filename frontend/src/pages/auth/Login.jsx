@@ -1,83 +1,80 @@
-import React, { useState } from 'react'
-import Button from '../../components/ui/Button'
-import './Auth.scss'
-import Input from '@/components/ui/Input'
-import { Link, useNavigate } from 'react-router-dom'
-import { login } from '@/api/auth.api'
+import React, { useState } from "react";
+import Button from "../../components/ui/Button";
+import "./Auth.scss";
+import Input from "@/components/ui/Input";
+import { Link, useNavigate } from "react-router-dom";
+import { login } from "@/api/auth.api";
 const Login = () => {
-
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [form, setForm] = useState({
-    email: '',
-    password: ''
-  })
+    email: "",
+    password: "",
+  });
 
-  const [error, setError] = useState('')
-  const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleChange = (e) => {
-    const { name, value } = e.target
+    const { name, value } = e.target;
 
     setForm((prev) => ({
       ...prev,
-      [name]: value
-    }))
-  }
+      [name]: value,
+    }));
+  };
 
   const handleSumit = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
     if (!form.email.trim()) {
-      setError('이메일을 입력해주세요')
-      return
+      setError("이메일을 입력해주세요");
+      return;
     }
     if (!form.password.trim()) {
-      setError('비밀번호를 입력해주세요')
-      return
+      setError("비밀번호를 입력해주세요");
+      return;
     }
 
     try {
-      setIsLoading(true)
-      setError('')
+      setIsLoading(true);
+      setError("");
       await login({
         email: form.email.trim(),
-        password: form.password
-      })
-      navigate('/app')
-
+        password: form.password,
+      });
+      navigate("/app");
     } catch (error) {
-      setError(error.message || '로그인을 실패했습니다.')
+      setError(error.message || "로그인을 실패했습니다.");
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
-  }
-
+  };
 
   const handleBack = () => {
-    navigate(-1)
-  }
+    navigate(-1);
+  };
 
   return (
-    <section className='auth'>
+    <section className="auth">
       <div className="inner">
         <div className="auth-box">
-
           <nav>
             <h2>로그인</h2>
-            <Button text="뒤로가기"
+            <Button
+              text="뒤로가기"
+              backico="wh"
               className="back"
-              icons
-              onClick={handleBack} />
+              onClick={handleBack}
+            />
           </nav>
-          <form className='auth-form' onSubmit={handleSumit}>
+          <form className="auth-form" onSubmit={handleSumit}>
             <div className="form-group">
-
               <Input
                 type="email"
                 name="email"
                 value={form.email}
                 onChange={handleChange}
                 placeholder="이메일을 입력하세요"
-                />
+              />
               <Input
                 name="password"
                 value={form.password}
@@ -100,7 +97,7 @@ const Login = () => {
         </div>
       </div>
     </section>
-  )
-}
+  );
+};
 
-export default Login
+export default Login;

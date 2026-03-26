@@ -1,11 +1,11 @@
-import React from 'react'
+import React from "react";
 
 const Dashboard = () => {
   return (
-    <section className='page'>
+    <section className="page">
       <div className="inner"></div>
     </section>
-  )
-}
+  );
+};
 
-export default Dashboard
+export default Dashboard;
