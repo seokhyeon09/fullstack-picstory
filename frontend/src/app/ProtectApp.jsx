@@ -1,7 +1,7 @@
-import React from "react";
-import { Outlet } from "react-router-dom";
-import Header from "../components/layouts/Header";
-import Footer from "../components/layouts/Footer";
+import React from 'react'
+import { Outlet } from 'react-router-dom'
+import Header from '../components/layouts/Header'
+import Footer from '../components/layouts/Footer'
 const ProtectApp = () => {
   return (
     <>
@@ -9,7 +9,7 @@ const ProtectApp = () => {
       <Outlet />
       <Footer />
     </>
-  );
-};
+  )
+}
 
-export default ProtectApp;
+export default ProtectApp
