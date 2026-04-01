@@ -1,12 +1,9 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import PostTag from './PostTag'
-import './PostComponentAll.scss'
-
-
 const PostCard = ({ post }) => {
     return (
-        <Link className='post-card'>
+        <Link to={`/app/posts/${post.id}`} className='post-card'>
             <article>
                 <div className="post-card-body">
                     <p className='post-category'>{post.category}</p>

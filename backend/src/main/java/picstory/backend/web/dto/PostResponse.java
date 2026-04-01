@@ -14,8 +14,9 @@ public record PostResponse(
         String memberName,
         LocalDateTime createdAt
 ) {
+
     public static PostResponse from(Post post){
-        return new PostResponse(
+        return  new PostResponse(
                 post.getId(),
                 post.getCategory(),
                 post.getTitle(),

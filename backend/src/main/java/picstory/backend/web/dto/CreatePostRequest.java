@@ -6,6 +6,5 @@ public record CreatePostRequest(
         PostCategory category,
         String title,
         String content
-
 ) {
 }
