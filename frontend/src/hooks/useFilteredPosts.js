@@ -2,7 +2,7 @@ import { useMemo } from "react"
 
 const useFilteredPosts =(posts, selectedTag,searchKeyword)=>{
     return useMemo(()=>{
-        
+
         const keyword = searchKeyword.toLowerCase().trim()
         const filteredByTag =
             selectedTag === '전체'
@@ -25,7 +25,7 @@ const useFilteredPosts =(posts, selectedTag,searchKeyword)=>{
         })
 
         return filtered
-        
+
     },[posts,selectedTag,searchKeyword])
 }
 

@@ -10,10 +10,9 @@ import PostDashboard from '../pages/posts/PostDashboard'
 import PostAll from '../pages/posts/PostAll'
 import PostEdit from '../pages/posts/PostEdit'
 import PostCreate from '../pages/posts/PostCreate'
-import PostDetail from '../pages/posts/Postdetail'
+import PostDetail from '../pages/posts/PostDetail'
 import Setting from '../pages/setting/Setting'
 import Profile from '../pages/profile/Profile'
-
 export const router = createBrowserRouter([
   {
     // 공개영역

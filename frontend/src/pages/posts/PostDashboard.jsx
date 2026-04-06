@@ -50,8 +50,10 @@ const PostDashboard = () => {
         fetchPosts()
     }, [])
 
-    const filteredPosts = useFilteredPosts(posts, selectedTag, searchKeyword)
 
+
+
+    const filteredPosts = useFilteredPosts(posts,selectedTag,searchKeyword)
     const handleCreatePost = () => {
         console.log('새 메모 작성')
         navigate('/app/posts/new')
@@ -82,9 +84,8 @@ const PostDashboard = () => {
                     />
                     <Button text="전체 게시글 보기" className="wh" />
                 </div>
-                <PostList posts={filteredPosts} />
+                <PostList posts={filteredPosts.slice(0,3)} />
             </div>
-            <PostList posts={filteredPosts.slice(0, 3)} />
         </section>
     )
 }
