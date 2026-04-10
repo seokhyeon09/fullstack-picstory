@@ -58,9 +58,13 @@ export const getMe = async () => {
 
     return data
 }
+
 export const updateMe = async (payload) => {
     const response = await fetch(`${BASE_URL}/auth/me`, {
         method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json'
+        },
         credentials: 'include',
         body: JSON.stringify(payload)
 
@@ -92,3 +96,4 @@ export const logout = async () => {
 
     return data
 }
+
