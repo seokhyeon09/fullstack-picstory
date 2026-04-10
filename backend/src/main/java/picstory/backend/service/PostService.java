@@ -8,6 +8,7 @@ import picstory.backend.domain.Member;
 import picstory.backend.domain.Post;
 import picstory.backend.repository.MemberRepository;
 import picstory.backend.repository.PostRepository;
+import picstory.backend.repository.TagRepository;
 import picstory.backend.web.dto.CreatePostRequest;
 import picstory.backend.web.dto.PostResponse;
 import picstory.backend.web.dto.UpdatePostRequest;
@@ -114,7 +115,10 @@ public class PostService {
         }
 
         return PostResponse.from(post);
+
+
     }
+
 
     @Transactional
     public PostResponse updateTags(Long id, UpdatePostTagsRequest request, HttpSession session){
@@ -127,7 +131,6 @@ public class PostService {
         if (memberId == null) {
             throw new IllegalArgumentException("로그인 후 이용해 주세요");
         }
-
         Post post = postRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("게시글이 존재하지 않습니다."));
 
@@ -136,7 +139,6 @@ public class PostService {
         }
 
         post.updateTags(tagService.resolveOrCreateTags(memberId, request.tags()));
-
         return PostResponse.from(post);
     }
 
@@ -145,6 +147,7 @@ public class PostService {
         if(id==null){
             throw  new IllegalArgumentException("게시글 id를 확인해 주세요");
         }
+
         Long memberId = (Long) session.getAttribute(LOGIN_MEMBER_ID);
 
         if (memberId == null) {

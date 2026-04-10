@@ -13,22 +13,23 @@ import java.util.Set;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(
-    name = "tags",
-    uniqueConstraints = @UniqueConstraint(
-            name = "uk_member_tag_label",
-            columnNames = {"member_id", "label"}
-    )
+        name = "tags",
+        uniqueConstraints = @UniqueConstraint(
+                name = "uk_member_tag_label",
+                columnNames = {"member_id","label"}
+        )
 )
 public class Tag {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "member_id", nullable = false)
+
+    @ManyToOne(fetch = FetchType.LAZY,optional = false)
+    @JoinColumn(name = "member_id",nullable = false)
     private Member member;
 
-    @Column(nullable = false, length = 50)
+    @Column(nullable = false,length = 50)
     private String label;
 
     @ManyToMany(mappedBy = "tags")
@@ -42,17 +43,16 @@ public class Tag {
 
     @PrePersist
     public void onCreate(){
-        this.createdAt=LocalDateTime.now();
+        this.createdAt = LocalDateTime.now();
         this.updatedAt=this.createdAt;
     }
-
     @PreUpdate
     public void onUpdate(){
-        this.updatedAt = LocalDateTime.now();
+        this.updatedAt=LocalDateTime.now();
     }
 
-    public Tag(Member member, String label){
-        this.member = member;
+    public Tag(Member member,String label){
+        this.member= member;
         this.label=label;
     }
 }

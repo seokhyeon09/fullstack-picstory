@@ -8,7 +8,7 @@ import { CATEGORY_OPTIONS } from '@/constants/category'
 import PostTag from '@/components/posts/PostTag'
 import { createPost } from '@/api/post.api'
 import { uploadImage } from '@/api/file.api'
-import { createTag, deleteTag, getMyTags } from '../../api/tag.api'
+import { createTag,deleteTag, getMyTags } from '@/api/tag.api'
 const PostCreate = () => {
 
 
@@ -24,14 +24,14 @@ const PostCreate = () => {
   const [isSaving, setIsSaving] = useState(false)
   const [imageUrl, setImageUrl] = useState(null)
 
-  const loadMyTags = async () => {
+  const loadMyTags = async()=>{
     const res = await getMyTags()
-    const list = Array.isArray(res) ? res : res?.data ?? []
+    const list = Array.isArray(res)? res :res?.data?? []
 
     setTags(
-      list.map((t) => ({
-        id: t.id,
-        label: typeof t === 'string' ? t : t.label ?? t.name
+      list.map((t)=>({
+        id:t.id,
+        label:typeof t ==='string'? t: t.label?? t.name
       }))
     )
 
@@ -39,31 +39,33 @@ const PostCreate = () => {
     // console.log(res)
   }
 
-  useEffect(() => {
-    loadMyTags().catch((e) => {
+  useEffect(()=>{
+    loadMyTags().catch((e)=>{
       console.error(e)
     })
-  }, [])
+  },[])
 
-  const handleAddTag = async () => {
+  const handleAddTag =async()=>{
     const next = tagInput.trim()
-    if (!next) return
 
-    if (tags.some((t) => t.label == next)) {
+    if(!next) return
+
+    if(tags.some((t)=>t.label ==next)){
       setTagInput('')
       return
     }
-
     try {
       setIsAddingTag(true)
+
       const created = await createTag(next)
-      setTags((prev) => {
-        if (prev.some((t) => t.id === created.id || t.label === created.label)) {
+
+      setTags((prev)=>{
+        if(prev.some((t)=>t.id===created.id || t.label ===created.label)){
           return prev
         }
-        return [...prev, {
-          id: created.id,
-          label: created.label
+        return [...prev,{
+          id:created.id,
+          label:created.label
         }]
       })
       setTagInput('')
@@ -71,49 +73,46 @@ const PostCreate = () => {
       console.error(error)
       const message = error?.response?.data?.message || '태그 추가 실패'
       alert(message)
-    } finally {
+    }finally{
       setIsAddingTag(false)
     }
-  }
 
-  const handleKeyEnter = (e) => {
-    if (e.key === 'Enter') {
+  }
+  const handleKenEnter =(e)=>{
+    if(e.key==='Enter'){
       e.preventDefault()
       handleAddTag()
     }
   }
-
   const handleRemoveTag = async(tag)=>{
     try {
       await deleteTag(tag.id)
       setTags((prev)=>prev.filter((t)=>t.id!==tag.id))
     } catch (error) {
-      console.error(error)
+       console.error(error)
       const message = error?.response?.data?.message || '태그 삭제 실패'
       alert(message)
     }
   }
 
-  
-
   const handleUploadImage = async (e) => {
     const file = e.target.files?.[0]
 
-    if (!file) return
+    if(!file) return
 
     try {
-      const presigned = await uploadImage(file)
+       const presigned = await uploadImage(file)
       setImageUrl(presigned.fileName)
 
     } catch (error) {
-      console.error('이미지 업로드 실패', error)
-    } finally {
-      e.target.value = ''
+      console.error('이미지 업로드 실패',error)
+    }finally{
+      e.target.value=''
     }
   }
 
 
-    const handleSave = async (e) => {
+  const handleSave = async (e) => {
     e.preventDefault()
     if (!title.trim()) {
       alert('제목을 입력하세요')
@@ -186,21 +185,23 @@ const PostCreate = () => {
             <div className="post-tag-box">
 
               <div className="tags">
-                {tags.map((t) => (
-                  <PostTag 
-                  tag={t.label}
-                  onClick={()=>handleRemoveTag(t)}
-                   key={t.id}
-                    />
-                ))}
+                  {tags.map((t)=>(
+                    <PostTag 
+                    tag={t.label} 
+                    onClick={()=>handleRemoveTag(t)}
+                    key={t.id}/>
+
+                  ))}
                 <input
                 value={tagInput}
-                onKeyDown={handleKeyEnter}
+                onKeyDown={handleKenEnter}
                 onChange={(e)=>setTagInput(e.target.value)}
                 type="text" className='post-tag-input' placeholder='tag를 자유롭게 입력하세요' />
                 <Button 
+                type="button" 
+                text="+ 태그 추가" 
                 onClick={handleAddTag}
-                type="button" text="+ 태그 추가" className="post-tag-add" />
+                className="post-tag-add" />
               </div>
             </div>
             <div className="post-field">
@@ -214,21 +215,21 @@ const PostCreate = () => {
               </div>
             </div>
             <div className="post-upload-card">
-              <div
-                onClick={() => fileInputRef.current?.click()}
-                className="post-upload-placeholder">
+              <div 
+              onClick={()=>fileInputRef.current?.click()}
+              className="post-upload-placeholder">
 
-                <input
-                  type="file"
-                  ref={fileInputRef}
-                  accept='image/*'
-                  onChange={handleUploadImage}
-                  className='post-uppload-input' />
-                {imageUrl ? (
+                <input 
+                type="file" 
+                ref={fileInputRef}
+                accept='image/*' 
+                onChange={handleUploadImage}
+                className='post-uppload-input' />
+                {imageUrl?(
 
                   <img src={imageUrl} alt="preview" className='post-upload-preview' />
-                ) : (
-                  <img src="/images/add.svg" alt="img" className='post-upload-icon' />
+                ):(
+                  <img src="/images/add.svg" alt="img" className='post-upload-icon'/>
 
                 )}
 
