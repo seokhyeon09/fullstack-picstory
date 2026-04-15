@@ -85,7 +85,10 @@ section {
   position: relative;
   height: 100%;
   max-width: $container-sm;
-  margin: auto
+  margin: auto;
+    @media screen and (max-width:$container-lg) {
+      padding: 0 $space-md;
+    }
 }
 
 /* Glass card helper */

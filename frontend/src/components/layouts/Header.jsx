@@ -1,6 +1,5 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import './Header.scss'
-import { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import Button from '../ui/Button'
 import { logout as logoutApi } from '@/api/auth.api'
@@ -8,7 +7,7 @@ import { useAuth } from '@/store/auth.store'
 const Header = () => {
   const navigate = useNavigate()
   const { logout } = useAuth()
-  const {menuOpen, setMenuOpen} = useState(false)
+  const [menuOpen, setMenuOpen] = useState(false)
 
   const menus = [
     {
@@ -25,15 +24,18 @@ const Header = () => {
     }
   ]
 
-  useEffect(()=>{
-    if(!menuOpen)return
-    const onKey = (e)=>{
-      if(e.key==='Escape')setMenuOpen(false)
+
+  useEffect(() => {
+    if (!menuOpen) return
+
+    const onkey = (e) => {
+      if (e.key === 'Escape') setMenuOpen(false)
     }
 
-    window.addEventListener('keydown', onKey)
+    window.addEventListener('keydown', onkey)
 
-    return ()=>window.removeEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onkey)
+
   }, [menuOpen])
 
 
@@ -57,23 +59,46 @@ const Header = () => {
             <img src="/images/logo.svg" alt="logo" />
           </Link>
         </h1>
-        <div className="right">
+        <div className={`right ${menuOpen ? 'is-nav-open' : ''} `}>
+          <button
+            type='button'
+            className='header-menu-toggle'
+            aria-expanded={menuOpen}
+            aria-controls='header-nav'
+            onClick={() => setMenuOpen((v) => !v)}
+          >
+            <span className='header-menu-toggle__label' >메뉴 열기</span>
+            <span className='header-menu-toggle__bar' aria-hidden />
+            <span className='header-menu-toggle__bar' aria-hidden />
+            <span className='header-menu-toggle__bar' aria-hidden />
 
-          <ul>
-            {menus.map((menu, i) => (
-              <li key={i}>
-                <Button
-                  icons
-                  className="sq"
-                  onClick={() => navigate(menu.link)}
-                  text={menu.name} />
-              </li>
-            ))}
-          </ul>
+          </button>
+          <div 
+          className="header-nav-backdrop"
+          aria-hidden
+          onClick={()=>setMenuOpen(false)}
+          />
+          <nav id='header-nav' aria-label='주 메뉴'>
+
+            <ul>
+              {menus.map((menu, i) => (
+                <li key={i}>
+                  <Button
+                    icons
+                    className="sq"
+                    onClick={() =>{ 
+                      navigate(menu.link)
+                      setMenuOpen(false)
+                    }}
+                    text={menu.name} />
+                </li>
+              ))}
+            </ul>
           <Button
             text="로그아웃"
             // backico='wh' 
             onClick={handleLogout} />
+          </nav>
         </div>
       </div>
     </header>
