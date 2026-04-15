@@ -1,5 +1,6 @@
 import React from 'react'
 import './Header.scss'
+import { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import Button from '../ui/Button'
 import { logout as logoutApi } from '@/api/auth.api'
@@ -7,6 +8,7 @@ import { useAuth } from '@/store/auth.store'
 const Header = () => {
   const navigate = useNavigate()
   const { logout } = useAuth()
+  const {menuOpen, setMenuOpen} = useState(false)
 
   const menus = [
     {
@@ -23,12 +25,24 @@ const Header = () => {
     }
   ]
 
+  useEffect(()=>{
+    if(!menuOpen)return
+    const onKey = (e)=>{
+      if(e.key==='Escape')setMenuOpen(false)
+    }
+
+    window.addEventListener('keydown', onKey)
+
+    return ()=>window.removeEventListener('keydown', onKey)
+  }, [menuOpen])
+
 
   const handleLogout = async () => {
     try {
 
       await logoutApi()
       logout()
+      setMenuOpen(false)
       navigate("/")
 
     } catch (error) {
